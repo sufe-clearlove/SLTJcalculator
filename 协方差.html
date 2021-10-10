@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="zh-CN">
+
+<!--<![endif]-->
+
+<head>
+
+<!-- Basic Page Needs ==================================================
+================================================== -->
+
+<meta charset="utf-8">
+<title>协方差计算器</title>
+<meta name="description" content="Place to put your description text">
+<meta name="author" content="">
+
+
+
+<!-- Mobile Specific Metas ==================================================
+================================================== -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+<!-- CSS ==================================================
+================================================== -->
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/screen.css">
+<link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<!-- Favicons ==================================================
+================================================== -->
+
+
+
+<!-- Google Fonts ==================================================
+================================================== -->
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+</head>
+<style>
+body
+{
+
+  background-size: 100% 100%;
+  position: relative;
+  opacity:1;
+
+background-image: url("images/xmbj4.jpg") ;
+}
+</style>
+
+<body>
+<!--Content Part ==================================================
+================================================== -->
+<div id="header">
+  <div class="container">
+
+    <!-- Header | Logo, Menu
+		================================================== -->
+    <div class="logo"><a href="主页.html"><h1><font color="black">数理统计</font></h1><h3><font color="black">计算器</font></h3></a></div>
+    <div class="mainmenu">
+      <div id="mainmenu">
+        <ul class="sf-menu">
+
+          <li><a href="主页.html" id="visited" >首页</a></li>
+          <li><a href="基本运算.html" >基本四则运算</a></li>
+          <li><a>数理统计基本功能</a>
+            <ul>
+              <li><a href="平均值.html">平均数计算</a></li>
+              <li><a href="标准差.html">标准差计算</a></li>
+              <li><a href="阶乘.html">阶乘计算</a></li>
+              <li><a href="正态分布.html">正态分布计算</a></li>
+              <li><a href="二项式分布.html">二项分布计算</a></li>
+              <li><a href="泊松分布.html">泊松分布计算</a></li>
+            </ul>
+          </li>
+          <li><a>数理统计进阶功能</a>
+            <ul>
+              <li><a href="相关系数.html">相关系数计算</a></li>
+              <li><a href="协方差.html">协方差计算</a></li>
+              <li><a href="卡方检验.html">卡方检验计算</a></li>
+              <li><a href="T检验.html">T检验计算</a></li>
+              <li><a href="F检验.html">F检验计算</a></li>
+              <li><a href="置信区间.html">置信区间计算</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- mainmenu ends here -->
+
+      <!-- Responsive Menu -->
+    </div>
+
+    <!-- mainmenu ends here -->
+  </div>
+  <!-- container ends here -->
+</div>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>协方差计算器</title>
+<br>
+<center>
+<h2>协方差计算器</h2>
+  </center>
+
+
+<script type="text/javascript">
+function calculate() {
+	var x = document.getElementById("xinputs").value;
+	var y = document.getElementById("yinputs").value;
+	x=x.replace(' ','');
+	y=y.replace(' ','');
+	var arr=x.split(',');
+	var arr2=y.split(',');
+	var calculationx = x.replace(/\,/g,' + ');
+	var calculationy = y.replace(/\,/g,' + ');
+	if(arr.length!=arr2.length||arr.length==0){
+		alert("Please Check your Inputs");
+		return ;
+	}
+	var lcm=0;
+	var flag=false;
+	var total=1;
+	var x=0;
+	var y=0;
+	var xy=0;
+	var xx=0;
+	var yy=0;
+	for(var j=0;j<arr.length;j++){
+		arr[j]=parseFloat(arr[j]);
+		arr2[j]=parseFloat(arr2[j]);
+		x+=arr[j];
+		y+=arr2[j];
+		xx+=Math.pow(arr[j],2);
+		yy+=Math.pow(arr2[j],2);
+		xy+=arr[j]*arr2[j];
+	}
+	var xmean=Math.round(x/arr.length*1000)/1000;
+	var ymean=Math.round(y/arr.length*1000)/1000;
+	var calculation = "Sum(X) ="+calculationx+ " = "+x+"<br>";
+	calculation += "X<sub>平均</sub> = "+xmean+"<br>";
+	calculation += "Sum(Y) ="+calculationy +" = "+y+"<br>";
+	calculation += "Y<sub>平均</sub> = "+ymean+"<br>";
+	calculation += "协方差(X,Y) = <font size=2>SUM</font>(x<sub>i</sub> - x<sub>平均</sub>)*(y<sub>i</sub> - y<sub>平均</sub>)/(samplesize -1)<br> = ";
+	var res = 0;
+
+
+
+	for(var j=0;j<arr.length;j++){
+		res += (arr[j]-xmean)*(arr2[j]-ymean);
+		calculation += "("+arr[j]+"-"+xmean+")*("+arr2[j]+"-"+ymean+")";
+		if(j<arr.length-1)
+			calculation +="+";
+	}
+	res = Math.round(res/(arr.length-1)*1000)/1000;
+
+	document.getElementById("res_area").style.visibility = "visible";
+	document.getElementById("nos").innerHTML = arr.length;
+	document.getElementById("xmean").innerHTML = xmean;
+	document.getElementById("ymean").innerHTML = ymean;
+	document.getElementById("cov").innerHTML = res;
+	document.getElementById("calculation").innerHTML = calculation+")/"+(arr.length-1)+"<br> = "+res;
+}
+</script>
+
+<table class="main">
+    <br>
+<tbody>
+<tr><td ><label><font size="3">输入X=</font></label></td><td><textarea id="xinputs" style="height: 60px;width: 250px;resize: none;">5,20,40,80</textarea> <br><label>通过英文逗号(,)分隔。</label><br> <label id="error1" class="error"></label></td></tr>
+<tr><td ><label><font size="3">输入Y=</font></label></td><td><textarea id="yinputs" style="height: 60px;width: 250px;resize: none;">10,24,33,54</textarea> <br><label>通过英文逗号(,)分隔。</label><br> <label id="error1" class="error"></label></td></tr>
+<tr><td align="center"></td><td><input type="button" class="calbtn" value="计算" id="button" onclick="calculate()" class="calc"></td><td></td></tr>
+</tbody></table>
+
+<div id="res_area">
+<table class="main">
+<tbody><tr><td colspan="5"><font id="res" class="output">结果：</font></td></tr>
+<tr><td><label><font size="3">输入个数：</font></label></td><td><label type="text" id="nos"></label></td></tr>
+<tr><td><label><font size="3">X平均值：</font></label></td><td><label id="xmean"></label></td></tr>
+<tr><td><label><font size="3">Y平均值：</font></label></td><td><label id="ymean"></label></td></tr>
+<tr><td><font color="red" size="3" ><label>协方差(X,Y)：</font></td><td><font color="red" ><label id="cov"></label></font></td></tr>
+<tr><td ><label><font size="3">计算过程：</label></td><td><div id="calculation"></div></td></tr>
+</tbody></table>
+</div>
+
+<div class="bottom">
+<p>协方差分析是建立在方差分析和回归分析基础之上的一种统计分析方法。 方差分析是从质量因子的角度探讨因素不同水平对实验指标影响的差异。一般说来，质量因子是可以人为控制的。 回归分析是从数量因子的角度出发，通过建立回归方程来研究实验指标与一个（或几个）因子之间的数量关系。但大多数情况下，数量因子是不可以人为加以控制的。</p>
+<p>协方差（Covariance）在概率论和统计学中用于衡量两个变量的总体误差。而方差是协方差的一种特殊情况，即当两个变量是相同的情况。</p>
+<p>期望值分别为E(X)=μ与E(Y)=ν的两个实数随机变量X 与Y 之间的协方差定义为：</p>
+<p>cov(X, Y) = E((X - μ) (Y - ν))，其中E是期望值。</p>
+<p>它也可以表示为：cov(X, Y) = E(XY) - μν，直观上来看，协方差表示的是两个变量的总体的误差，这与只表示一个变量误差的方差不同。 如果两个变量的变化趋势一致，也就是说如果其中一个大于自身的期望值，另外一个也大于自身的期望值，那么两个变量之间的协方差就是正值。 如果两个变量的变化趋势相反，即其中一个大于自身的期望值，另外一个却小于自身的期望值，那么两个变量之间的协方差就是负值。</p>
+</div>
+<div class="footer">
+  <div class="container">
+    <div class="one_fourth">
+      <h3>团队信息</h3>
+      <p><span class="orange"><strong>地址:</strong></span> <br>
+        上海市杨浦区国定路777号<br>上海财经大学</p>
+
+      <p><span class="orange"><strong>开发人员:</strong></span> <br>
+        SUFE Clearlove<br>
+      </p>
+    </div>
+    <!-- four columns ends here -->
+    <div class="one_fourth">
+      <h3>联系我们</h3>
+      <ul>
+        <li><a href="#" title="">蔡晨</a></li>
+        <li><a href="#" class="">1513707712@qq.com</a></li>
+        <li><a href="#" class="">伦亚琦</a></li>
+        <li><a href="#" class="">lun_yaqi@163.com</a></li>
+      </ul>
+    </div>
+    <!-- four columns ends here -->
+
+
+    <!-- four columns ends here -->
+    <div class="one_fourth lastcolumn">
+      <h3>网站声明</h3>
+      <p>本网站仅用于简化计算，请勿用于专业研究</p>
+    </div>
+
+    <div class="one_fourth">
+      <img src="images/badge.jpg" height="150" width="360":20px>
+    </div>
+    <!-- four columns ends here -->
+  </div>
+  <!-- container ends here -->
+</div>
+<script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
+<!-- Main js files -->
+<script src="js/screen.js" type="text/javascript"></script>
+<!-- Tabs -->
+<script src="js/tabs.js" type="text/javascript"></script>
+<!-- Include prettyPhoto -->
+<script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
+<!-- Include Superfish -->
+<script src="js/superfish.js" type="text/javascript"></script>
+<script src="js/hoverIntent.js" type="text/javascript"></script>
+<!-- Flexslider -->
+<script src="js/jquery.flexslider-min.js" type="text/javascript"></script>
+<!-- Modernizr -->
+<script type="text/javascript" src="js/modernizr.custom.29473.js"></script>
+
+</body>
+</html>

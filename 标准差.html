@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="zh-CN">
+
+<!--<![endif]-->
+
+<head>
+
+<!-- Basic Page Needs ==================================================
+================================================== -->
+
+<meta charset="utf-8">
+<title>标准差计算器</title>
+<meta name="description" content="Place to put your description text">
+<meta name="author" content="">
+
+
+
+<!-- Mobile Specific Metas ==================================================
+================================================== -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+<!-- CSS ==================================================
+================================================== -->
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/screen.css">
+<link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<!-- Favicons ==================================================
+================================================== -->
+
+
+
+<!-- Google Fonts ==================================================
+================================================== -->
+<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+</head>
+<style>
+body
+{
+
+  background-size: 100% 100%;
+  position: relative;
+  opacity:1;
+
+background-image: url("images/xmbj4.jpg") ;
+}
+</style>
+
+<body>
+<!--Content Part ==================================================
+================================================== -->
+<div id="header">
+  <div class="container">
+
+    <!-- Header | Logo, Menu
+		================================================== -->
+    <div class="logo"><a href="主页.html"><h1><font color="black">数理统计</font></h1><h3><font color="black">计算器</font></h3></a></div>
+    <div class="mainmenu">
+      <div id="mainmenu">
+        <ul class="sf-menu">
+
+          <li><a href="主页.html" id="visited" >首页</a></li>
+          <li><a href="基本运算.html" >基本四则运算</a></li>
+          <li><a>数理统计基本功能</a>
+            <ul>
+              <li><a href="平均值.html">平均数计算</a></li>
+              <li><a href="标准差.html">标准差计算</a></li>
+              <li><a href="阶乘.html">阶乘计算</a></li>
+              <li><a href="正态分布.html">正态分布计算</a></li>
+              <li><a href="二项式分布.html">二项分布计算</a></li>
+              <li><a href="泊松分布.html">泊松分布计算</a></li>
+            </ul>
+          </li>
+          <li><a>数理统计进阶功能</a>
+            <ul>
+              <li><a href="相关系数.html">相关系数计算</a></li>
+              <li><a href="协方差.html">协方差计算</a></li>
+              <li><a href="卡方检验.html">卡方检验计算</a></li>
+              <li><a href="T检验.html">T检验计算</a></li>
+              <li><a href="F检验.html">F检验计算</a></li>
+              <li><a href="置信区间.html">置信区间计算</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- mainmenu ends here -->
+
+      <!-- Responsive Menu -->
+    </div>
+
+    <!-- mainmenu ends here -->
+  </div>
+  <!-- container ends here -->
+</div>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>标准差计算器</title>
+<br>
+<center>
+<h2>标准差计算器</h2>
+  </center>
+
+
+<script type="text/javascript">
+function calculate() {
+	var x = document.getElementById("inputs").value;
+	x=x.replace(' ','');
+	var arr=x.split(',');
+	var lcm=0;
+	var flag=false;
+	var total=0;
+	for(var j=0;j<arr.length;j++){
+		arr[j]=parseFloat(arr[j]);
+		total+=arr[j];
+	}
+	var mean=total/arr.length;
+	mean=Math.round(mean*10000)/10000;
+	var xm2=0;
+	var srt='';
+	var srt1='';
+	var srt2='';
+	for(var j=0;j<arr.length;j++){
+		xm2+=Math.pow((arr[j]-mean),2);
+		if(j==arr.length-1){
+			srt+='('+arr[j]+'-'+mean+')^2';
+			srt1+='('+(arr[j]-mean)+')^2';
+			srt2+='('+Math.pow((arr[j]-mean),2)+')';
+		}else{
+			srt+='('+arr[j]+'-'+mean+')^2+';
+			srt1+='('+(arr[j]-mean)+')^2+';
+			srt2+='('+Math.pow((arr[j]-mean),2)+')+';
+		}
+	}
+	var sd=xm2/(arr.length-1);
+	var psd=xm2/(arr.length);
+	var sd1=sd;
+	var psd1=psd;
+	sd=Math.sqrt(sd);
+	psd=Math.sqrt(psd);
+	var sVariance=Math.pow(sd,2);
+	sVariance=Math.round(sVariance*10000)/10000;
+	var pVariance=Math.pow(psd,2);
+	pVariance=Math.round(pVariance*10000)/10000;
+	sd=Math.round(sd*10000)/10000;
+	psd=Math.round(psd*10000)/10000;
+	var calc="";
+	calc+="输入数字(N) =("+document.getElementById("inputs").value+")\n个数(N)="+arr.length+"\n";
+	calc+="平均值(xm)= (x1+x2+x3...xN)/N \n平均值(xm)= "+total+"/"+arr.length+"\n平均值(xm)= "+mean+"\n-------------------------------------------\n";
+	calc+="SD=\nsqrt(1/(N-1)*((x1-xm)^2+(x2-xm)^2+..+(xN-xm)^2))\n\n=sqrt(1/("+arr.length+"-1)("+srt+"))\n\n=sqrt(1/"+(arr.length-1)+"("+srt1+"))\n\n=sqrt(1/"+(arr.length-1)+"("+srt2+"))\n\n=sqrt("+sd1+")\n\n="+sd+"\n\nVariance=SD^2\n\nVariance="+sd+"^2\n\n"+"Variance="+sVariance+"\n-------------------------------------------\n";
+	calc+="PSD=\nsqrt(1/(N)*((x1-xm)^2+(x2-xm)^2+..+(xN-xm)^2))\n\n=sqrt(1/("+arr.length+")("+srt+"))\n\n=sqrt(1/"+(arr.length)+"("+srt1+"))\n\n=sqrt(1/"+(arr.length)+"("+srt2+"))\n\n=sqrt("+psd1+")\n\n="+psd+"\n\nVariance=SD^2\n\nVariance="+psd+"^2\n\n"+"Variance="+pVariance+"\n-------------------------------------------\n";
+
+	document.getElementById("res_area").style.visibility = "visible";
+	document.getElementById("result1").value = arr.length;
+	document.getElementById("result2").value = mean;
+	document.getElementById("result3").value = sd;
+	document.getElementById("result4").value = psd;
+	document.getElementById("result5").value = sVariance;
+	document.getElementById("result6").value = pVariance;
+	document.getElementById("result7").value = calc;
+
+}
+</script>
+<table class="main">
+<tbody>
+<tr><td valign="top"><label for="inputs"><br><font size="3">输入数值</font></label></td><td><textarea id="inputs" style="height: 60px;width: 250px;resize: none;">5,20,40,80,100</textarea><br><label for="inputs"><font  color="red">使用英文逗号(,)分隔。</font></label> <label id="unit"></label><br> <label id="error1" class="error" for="inputs"></label></td></tr>
+<tr><td align="center" colspan=2><input type="button" value="计算" id="button" onclick="calculate()" class="calbtn"></td><td></td></tr>
+</tbody></table>
+<div id="res_area">
+<table class="main">
+<tbody><tr><td colspan="2"><font id="res" class="output" size="3">结果：</font></td></tr>
+<tr><td><label for="result1"><font size="3">输入数字个数</font></label></td><td><input type="text" readonly="true" class="result" id="result1"> <label id="unit"></label></td></tr>
+<tr><td><label for="result2"><font size="3">平均值</font></label></td><td><input type="text" readonly="true" class="result" id="result2"> <label id="unit"></label></td></tr>
+<tr><td><label for="result3"><font size="3">样本标准偏差(SD)</font></label></td><td><input type="text" readonly="true" class="result" id="result3"> <label id="unit"></label></td></tr>
+<tr><td><label for="result4"><font size="3">总体标准差(PSD)</font></label></td><td><input type="text" readonly="true" class="result" id="result4"> <label id="unit"></label></td></tr>
+<tr><td><label for="result5"><font size="3">标准方差(SD)</font></label></td><td><input type="text" readonly="true" class="result" id="result5"> <label id="unit"></label></td></tr>
+<tr><td><label for="result6"><font size="3">总体方差(PSD)</font></label></td><td><input type="text" readonly="true" class="result" id="result6"> <label id="unit"></label></td></tr>
+<tr><td colspan="2"><label for="result7"><font size="3">计算过程：</font></label><br><textarea id="result7" cols="10" rows="10" class="span12"></textarea> <label id="unit"></label></td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="bottom">
+<p>标准偏差(Std Dev,Standard Deviation) -统计学名词。一种量度数据分布的分散程度之标准，用以衡量数据值偏离算术平均值的程度。标准偏差越小，这些值偏离平均值就越少，反之亦然。标准偏差的大小可通过标准偏差与平均值的倍率关系来衡量。</p>
+<p>样本标准方差公式：<img src="images/standard-deviation.jpg" alt="Standard Deviation Formula &amp; Calculation"> </p>
+<p>总体标准差公式：<img src="images/population-standard-deviation.jpg" alt="PSD - Population Standard Deviation Formula &amp; Calculation"></p>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+<div class="footer">
+	<div class="container">
+	  <div class="one_fourth">
+		<h3>团队信息</h3>
+		<p><span class="orange"><strong>地址:</strong></span> <br>
+		  上海市杨浦区国定路777号<br>上海财经大学</p>
+  
+		<p><span class="orange"><strong>开发人员:</strong></span> <br>
+		  SUFE Clearlove<br>
+		</p>
+	  </div>
+	  <!-- four columns ends here -->
+	  <div class="one_fourth">
+		<h3>联系我们</h3>
+		<ul>
+		  <li><a href="#" title="">蔡晨</a></li>
+		  <li><a href="#" class="">1513707712@qq.com</a></li>
+		  <li><a href="#" class="">伦亚琦</a></li>
+		  <li><a href="#" class="">lun_yaqi@163.com</a></li>
+		</ul>
+	  </div>
+	  <!-- four columns ends here -->
+  
+  
+	  <!-- four columns ends here -->
+	  <div class="one_fourth lastcolumn">
+		<h3>网站声明</h3>
+		<p>本网站仅用于简化计算，请勿用于专业研究</p>
+	  </div>
+  
+	  <div class="one_fourth">
+		<img src="images/badge.jpg" height="150" width="360":20px>
+	  </div>
+	  <!-- four columns ends here -->
+	</div>
+	<!-- container ends here -->
+  </div>
+  <script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
+  <!-- Main js files -->
+  <script src="js/screen.js" type="text/javascript"></script>
+  <!-- Tabs -->
+  <script src="js/tabs.js" type="text/javascript"></script>
+  <!-- Include prettyPhoto -->
+  <script src="js/jquery.prettyPhoto.js" type="text/javascript"></script>
+  <!-- Include Superfish -->
+  <script src="js/superfish.js" type="text/javascript"></script>
+  <script src="js/hoverIntent.js" type="text/javascript"></script>
+  <!-- Flexslider -->
+  <script src="js/jquery.flexslider-min.js" type="text/javascript"></script>
+  <!-- Modernizr -->
+  <script type="text/javascript" src="js/modernizr.custom.29473.js"></script>
+  
+  </body>
+  </html>
