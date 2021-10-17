@@ -250,7 +250,8 @@ background-image: url("images/xmbj4.jpg") ;
          return;
       }
 
-      calresults=eval(results);
+      calresults=parseFloat(eval(results));
+      calresults=calresults.toFixed(3);
       display.innerText=calresults;
       lastkey="=";
       results="";
